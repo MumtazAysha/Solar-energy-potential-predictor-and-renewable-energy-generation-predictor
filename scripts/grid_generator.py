@@ -21,6 +21,9 @@ class SriLankaGrid:
 
         #Add 10km buffer on all sides
         buffer_lat =  self.km_to_degrees_lat(10)
+        buffer_lon_min = self.km_to_degrees_loon(10, self.minlat)
+        buffer_lon_max = self.km_to_degrees_loon(10, self.maxlat)
+        buffer_lon = max(buffer_lon_min, buffer_lon_max)
         
 
 
