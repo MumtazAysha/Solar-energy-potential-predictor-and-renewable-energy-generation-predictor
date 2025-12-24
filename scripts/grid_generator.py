@@ -41,7 +41,15 @@ class SriLankaGrid:
         try:
             url = "https://naciscdn.org/naturalearth/110m/cultural/ne_110m_admin_0_countries.zip"
             world = gpd.read_file(url)
-            
+            srilanka = worls[world['NAME'] == 'Sri Lanka']
+            if len(srilanka) > 0:
+                self.srilanka_boundary = srilanka.gemometry.iloc[0]
+                print("✓ Boundary loaded")
+        except:
+            print("⚠ Boundary load failed")
+
+
+
         
 
 
