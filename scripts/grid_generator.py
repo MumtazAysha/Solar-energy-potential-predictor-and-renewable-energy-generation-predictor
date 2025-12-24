@@ -24,7 +24,16 @@ class SriLankaGrid:
         buffer_lon_min = self.km_to_degrees_loon(10, self.minlat)
         buffer_lon_max = self.km_to_degrees_loon(10, self.maxlat)
         buffer_lon = max(buffer_lon_min, buffer_lon_max)
+
+        self.minlat_buffered = self.minlat - buffer_lat
+        self.maxlat_buffered = self.maxlat + buffer_lat
+        self.minlon_buffered = self.minlon - buffer_lon
+        self.maxlon_buffered = self.maxlon + buffer_lon
+
         
+
+
+
 
 
 
