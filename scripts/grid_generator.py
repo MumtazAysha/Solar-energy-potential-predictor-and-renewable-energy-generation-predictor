@@ -58,6 +58,9 @@ class SriLankaGrid:
         """Create 10km x 10km grid"""
         print("Creating 10km x 10km grid cells...")
 
+        lat_step = self.km_to_degrees_lat(self.cell_size_km)
+        
+
          
 
 
