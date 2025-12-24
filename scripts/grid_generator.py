@@ -30,7 +30,10 @@ class SriLankaGrid:
         self.minlon_buffered = self.minlon - buffer_lon
         self.maxlon_buffered = self.maxlon + buffer_lon
 
+        self.cell_size_km = 10
         
+
+
 
 
 
