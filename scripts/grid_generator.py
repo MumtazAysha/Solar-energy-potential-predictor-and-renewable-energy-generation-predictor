@@ -18,6 +18,9 @@ class SriLankaGrid:
         self.maxlat = 9.850 # 9°51'N
         self.minlon = 79.683 # 79°41'E
         self.maxlon = 81.883 # 81°53'E
+
+        #Add 10km buffer on all sides
+        buffer_lat =  self.km_to_degrees_lat(10)
         
 
 
