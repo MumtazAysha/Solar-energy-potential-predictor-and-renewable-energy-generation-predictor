@@ -38,6 +38,10 @@ class SriLankaGrid:
 
     def _load_boundary(self):
         """Load Sri Lanka boundary"""
+        try:
+            url = "https://naciscdn.org/naturalearth/110m/cultural/ne_110m_admin_0_countries.zip"
+            world = gpd.read_file(url)
+            
         
 
 
