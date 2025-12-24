@@ -36,7 +36,11 @@ class SriLankaGrid:
         self.srilanka_bundary = None
         self._load_boundary()
 
+    def _load_boundary(self):
+        """Load Sri Lanka boundary"""
         
+
+
 
 
 
