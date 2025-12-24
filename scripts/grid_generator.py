@@ -54,6 +54,11 @@ class SriLankaGrid:
     def km_to_degrees_lon(self, km: float, lat: float) -> float:
         return km / (111.0 * math.cos(math.radians(latitude)))
     
+    def create_grid(self, classify_cells: bool = True) -> gpd.GeoDataFrame:
+        """Create 10km x 10km grid"""
+        print("Creating 10km x 10km grid cells...")
+
+         
 
 
 
