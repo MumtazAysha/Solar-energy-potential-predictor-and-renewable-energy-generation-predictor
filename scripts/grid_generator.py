@@ -33,7 +33,7 @@ class SriLankaGrid:
         self.cell_size_km = 10
 
         #Load Sri Lanka boundary
-        self.srilanka_bundary = None
+        self.srilanka_bundary = None)
         self._load_boundary()
 
     def _load_boundary(self):
@@ -48,10 +48,12 @@ class SriLankaGrid:
         except:
             print("⚠ Boundary load failed")
 
+    def km_to_degrees_lat(self, km: float) -> float:
+        return km / 111.0
 
-
-        
-
+    def km_to_degrees_lon(self, km: float, lat: float) -> float:
+        return km / (111.0 * math.cos(math.radians(latitude)))
+    
 
 
 
