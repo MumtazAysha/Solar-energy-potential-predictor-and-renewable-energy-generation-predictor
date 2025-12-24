@@ -31,7 +31,13 @@ class SriLankaGrid:
         self.maxlon_buffered = self.maxlon + buffer_lon
 
         self.cell_size_km = 10
+
+        #Load Sri Lanka boundary
+        self.srilanka_bundary = None
+        self._load_boundary()
+
         
+
 
 
 
