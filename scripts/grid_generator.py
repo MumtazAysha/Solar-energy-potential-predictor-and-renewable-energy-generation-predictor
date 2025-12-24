@@ -9,3 +9,8 @@ import folium
 from pathlib import Path
 import math
 
+class SriLankaGrid:
+    """creates 10km x 10km grid cells for Sri Lanka"""
+
+    
+
