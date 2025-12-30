@@ -62,6 +62,9 @@ class SriLankaGrid:
         center_lat = (self.minlat_buffered + self.maxlat_buffered)/2
         lon_step = self.km_to_degrees_lon(self.cell_size_km, center_lat)
 
+        nrows = int(np.ceil((self.maxlat_buffered - self.minlat_buffered) / lat_step))
+        ncols = int(np.ceil((self.maxlon_buffered - self.minlon_buffered) / lon_step))
+
         
 
         
