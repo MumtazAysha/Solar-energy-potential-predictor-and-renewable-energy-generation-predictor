@@ -64,8 +64,10 @@ class SriLankaGrid:
 
         nrows = int(np.ceil((self.maxlat_buffered - self.minlat_buffered) / lat_step))
         ncols = int(np.ceil((self.maxlon_buffered - self.minlon_buffered) / lon_step))
-
         
+        
+
+
 
         
 
