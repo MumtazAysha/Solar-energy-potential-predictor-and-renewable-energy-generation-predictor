@@ -65,7 +65,100 @@ class SriLankaGrid:
         nrows = int(np.ceil((self.maxlat_buffered - self.minlat_buffered) / lat_step))
         ncols = int(np.ceil((self.maxlon_buffered - self.minlon_buffered) / lon_step))
         
-        
+        print(f"Grid: {nrows} roows x {ncols} columns = {nrows * ncols} cells")
+
+        grid_data =[]
+        cell_count = 0
+
+        for i in range(nrows):
+            for j in range(ncols):
+                minlat = self.minlat_buffered + i * lat_step
+                maxlat = minlat + lat_step
+                minlon = self.minlon_buffered + j * lon_step
+                maxlon = minlon + lon_step
+
+                cell_geom = box(minlon, minlat, maxlon, maxlat)
+                centroid = cell_geom.centroid
+
+                grid_data.append({
+                    "grid_id": f"grid_{i}_{j}",
+                    "cell_number": cell_count,
+                    "row": i,
+                    "col": j,
+                    "centroid_lat": centroid.y,
+                    "centrroid_lon": centroid.x,
+                    "minlat": minlat,
+                    "maxlat": maxlat,
+                    "minlon": minlon,
+                    "geometry": cell_geom,
+                })
+                cell_count += 1
+
+        grid_gdf = gpd.GeoDataFrame(grid_data, crs="EPSG:4326")
+
+        #calculate area
+        grid_metric = grid_gdf.to_crs("EPSG:32644")
+        grid_gdf["area_km2"] = grid_metric.geometry.area/1_000_000.0
+     
+        print(f"Created {len(grid_gdf)} cells | Avg area: {grid_gdf['area_km2'].mean():.2f} km²")
+
+        if classify_cells and self.srilanka_boundary:
+            grid_gdf = self.classify_cells(grid_gdf)
+
+        return grid_gdf
+
+    def classify_cells(self, grid_gdf):
+        """Classify as land/ocena/coastal"""
+        print("Classifiying cells...")
+        cell_types = []
+        for geom in grid_gdf.geometry:
+            if self.srilanka_bundary.contains(geom):
+                cell_types.append("land")
+            elif self.srilanka_boundary.intersects(geom):
+                cell_types.append("coastal")
+            else:
+                cell_types.append("ocean")
+        grid_gdf["cell_type"] =  cell_types
+        print(grid_gdf["cell_type"].value_counts())
+        return grid_gdf
+
+    def save_grid(self, grid_gdf, output_dir = "data/bronze/metadata"):
+        """save grid files"""
+        output_dir = Path(output_dir)
+        output_dir.mkdir(parents=True, exist_ok=True)
+
+        grid_gdf.to_file(output_dir/ "grid_cells_all.geojson", driver="GeoJSON")
+
+        coords_cols = ["grid_id", "cell_number", "row", "col", "centroid_lat",
+                        "centroid_ln", "minlat", "maxlat", "minlon", "maxlon", "area_km2"]
+        if "cell_type" in grid_gdf.columns:
+            coords_cols.append("cell_type") 
+
+        grid_gdf[coords_cols].to_csv(output_dir/"grid_coordinates_all.csv", index=False)
+        print(f"✓ Saved to {output_dir}")
+
+if __name__ == "__main__":
+    print("=" * 70)
+    print("SRI LANKA 10km x 10km GRID GENERATION")
+    print("=" * 70)
+
+    gridgen = SriLankaGrid()
+    grid_gdf = gridgen.create_grid(classify_cells=True)
+    gridgen.save_grid(grid_gdf)
+
+    print("=" * 70)
+    print(f"✓ COMPLETE! Total cells: {len(grid_gdf)}")
+    print("=" * 70)
+          
+
+
+
+
+
+
+
+
+
 
 
 
