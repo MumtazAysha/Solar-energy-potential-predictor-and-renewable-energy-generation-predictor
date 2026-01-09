@@ -3,8 +3,9 @@ import googlemaps
 from tqdm import tqdm
 import time
 
+GOOGLE_API_KEY = "AIzaSyD07sbzMiYSXoTsByLl4M8Z-fqovp_mrlE"  # Get from: https://console.cloud.google.com/
 
+def get_exxcaact_location_google(lat, loon, gmaps_client):
+    """Get detailed locatin using Google MAps"""
 
-
-
-
+    
