@@ -71,6 +71,22 @@ def get_exxcaact_location_google(lat, loon, gmaps_client):
         print(f"Error: {e}")
         return None
     
+   #Load coordinates 
+coords = pd.read_csv('data/bronze/metadata/grid_coordinates_all.csv')
+
+print("="*70)
+print("GETTING EXACT LOCAATIONS USING GOOGLE MAPS GEOCODING API")
+print("="*70)
+print(f"Total cells to geocode: {len(coords)}")
+print("Extimated cost: $0 (within free tier)\n")
+
+#Initializing Google Maps Client
+gmaps = googlemaps.Client(key=GOOGLE_API_KEY)
+
+
+
+
+
     
 
              
@@ -86,5 +102,4 @@ def get_exxcaact_location_google(lat, loon, gmaps_client):
 
 
 
-    except:
-        return None
+    
