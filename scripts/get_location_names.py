@@ -83,6 +83,14 @@ print("Extimated cost: $0 (within free tier)\n")
 #Initializing Google Maps Client
 gmaps = googlemaps.Client(key=GOOGLE_API_KEY)
 
+#Add location columns
+coords['location_name'] = ''
+coords['lcality'] = ''
+coords['dist1rict'] = ''
+coords['province'] = ''
+coords['formatted_address'] = ''
+
+
 
 
 
