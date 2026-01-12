@@ -15,8 +15,27 @@ def get_exxcaact_location_google(lat, loon, gmaps_client):
          if not results:
              return None
          
+         #Get the most specific result (first one is usually most detailed)
+         result = results[0]
+         address_components = result.get('address_components', [])
+         formatted_address = result.get('formatted_address', 'Unknown')
+ 
+         #Extract comonents
+         location_info = {
+             'neighborhood': None,
+             'locality': None,
+             'sublocality': None,
+             'city': None,
+             'district': None,
+             'province': None,
+             'postal_ode': None
+        } 
          
-    
+         for componenet in address_components:
+             
+        
+
+
 
 
 
