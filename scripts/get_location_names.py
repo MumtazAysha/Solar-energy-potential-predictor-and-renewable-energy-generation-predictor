@@ -31,7 +31,25 @@ def get_exxcaact_location_google(lat, loon, gmaps_client):
              'postal_ode': None
         } 
          
-         for componenet in address_components:
+         for component in address_components:
+             types = component.get('types', [])
+             name = component.get('long_name', '')
+
+             if 'neighborhood' in types:
+                 location_info['neighborhod'] = name
+             elif 'sublocality' in types or 'sublocality_level_1' in types:
+                 location_info['sublocality'] = name
+             elif 'locality' in types:
+                 location_info['locality'] = name
+             elif 'administrative_area_level_2' in types:
+                 location_info['district'] = name
+             elif 'administrative_area_level_1' in types:
+                 location_info['province'] = name   
+             elif 'postal_code' in types:
+                 location_info['postal_code'] = name
+
+        
+
              
         
 
