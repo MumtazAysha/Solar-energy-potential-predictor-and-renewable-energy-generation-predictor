@@ -48,7 +48,30 @@ def get_exxcaact_location_google(lat, loon, gmaps_client):
              elif 'postal_code' in types:
                  location_info['postal_code'] = name
 
-        
+        #Determine most specific location name
+         location_name = (
+             location_info['neighborhood'] or 
+             location_info['sublcality'] or
+             location_info['locality'] or 
+             location_info['district'] or 
+             'Unknown'
+         )
+
+
+         return{
+             'location_name': location_name,
+             'locality': location_info['locality'] or 'Unknown',
+             'district': location_info['disstrict'] or 'Unknown',
+             'province': location_info['provnce'] or 'Unknown',
+             'postal_code': location_info['postal_code'] or 'N/A',
+             'formatted_address': formatted_address
+         }
+    
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
+    
+    
 
              
         
