@@ -117,7 +117,7 @@ for idx, row in tqdm(coords.iterrows(), total=len(coords), desc="Geocoding"):
         coords.at[idx, 'district'] = location_info['district']
         coords.at[idx, 'province'] = location_info['province']
         coords.at[idx, 'postal_code'] = location_info['postal_code']
-        coords.at[idx, 'formaatted_address'] = location_info['frmatted_address']
+        coords.at[idx, 'formatted_address'] = location_info['formatted_address']
         successful += 1
     else:
         coords.at[idx, 'location_name'] = 'Unknown'
