@@ -37,7 +37,7 @@ def get_exact_location_google(lat, loon, gmaps_client):
 
              if 'neighborhood' in types:
                  location_info['neighborhod'] = name
-             elif 'sublocality' in types or 'sublocality_level_1' in types:
+             elif 'sublocality' in types:
                  location_info['sublocality'] = name
              elif 'locality' in types:
                  location_info['locality'] = name
@@ -129,7 +129,7 @@ for idx, row in tqdm(coords.iterrows(), total=len(coords), desc="Geocoding"):
         
 #Save results
 output_file = 'data/bronze/metadata/grid_coordinates_with_exact_locations.csv'
-coords.t_csv(output_file, ndex=False)
+coords.to_csv(output_file, index=False)
 
 print("\n" + "="*70)
 print("GEOCODING COMPLETE")
