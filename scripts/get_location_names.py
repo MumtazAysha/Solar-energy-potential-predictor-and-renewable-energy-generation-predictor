@@ -14,7 +14,7 @@ def get_exact_location_google(lat, loon, gmaps_client):
 
          if not results:
              return None
-         
+          
          #Get the most specific result (first one is usually most detailed)
          result = results[0]
          address_components = result.get('address_components', [])
@@ -28,7 +28,7 @@ def get_exact_location_google(lat, loon, gmaps_client):
              'city': None,
              'district': None,
              'province': None,
-             'postal_ode': None
+             'postal_code': None
         } 
          
          for component in address_components:
