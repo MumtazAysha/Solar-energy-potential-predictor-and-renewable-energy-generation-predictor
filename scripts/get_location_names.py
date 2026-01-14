@@ -37,7 +37,7 @@ def get_exact_location_google(lat, loon, gmaps_client):
 
              if 'neighborhood' in types:
                  location_info['neighborhod'] = name
-             elif 'sublocality' in types:
+             elif 'sublocality' in types or 'sublocality_level_1' in types:
                  location_info['sublocality'] = name
              elif 'locality' in types:
                  location_info['locality'] = name
