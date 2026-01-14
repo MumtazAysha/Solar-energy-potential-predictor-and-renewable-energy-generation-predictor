@@ -51,7 +51,7 @@ def get_exact_location_google(lat, loon, gmaps_client):
         #Determine most specific location name
          location_name = (
              location_info['neighborhood'] or 
-             location_info['sublcality'] or
+             location_info['sublocality'] or 
              location_info['locality'] or 
              location_info['district'] or 
              'Unknown'
