@@ -5,7 +5,7 @@ import time
 
 GOOGLE_API_KEY = "AIzaSyD07sbzMiYSXoTsByLl4M8Z-fqovp_mrlE"  # Get from: https://console.cloud.google.com/
 
-def get_exxcaact_location_google(lat, loon, gmaps_client):
+def get_exact_location_google(lat, loon, gmaps_client):
     """Get detailed locatin using Google MAps"""
 
     try:
@@ -89,6 +89,64 @@ coords['lcality'] = ''
 coords['dist1rict'] = ''
 coords['province'] = ''
 coords['formatted_address'] = ''
+
+#Process each cell
+successful = 0
+failed = 0
+
+for idx, row in tqdm(coords.iterrows(), total=len(coords), desc="Geocoding"):
+    lat = row['centroid_lat']
+    lon = row['centroid_lon']
+    cell_type =  row['cell_type']
+
+    #Skip ocean cells or process them differently
+    if cell_type == 'ocean':         
+        coords.at[idx, 'location_name'] = 'Indian Ocean'
+        coords.at[idx, 'locality'] = 'Ocean'
+        coords.at[idx, 'district'] = 'N/A'
+        coords.at[idx, 'province'] = 'N/A'
+        coords.at[idx, 'formatted_address'] = 'Indian Ocean'
+        continue
+
+    #Get location from Google
+    location_info = get_exact_location_google(lat, lon, gmaps)
+
+    if location_info:
+        coords.at[idx, 'location_name'] = location_info['location_name']
+        coords.at[idx, 'locality'] = location_info['locality']
+        coords.at[idx, 'district'] = location_info['district']
+        coords.at[idx, 'province'] = location_info['province']
+        coords.at[idx, 'postal_code'] = location_info['postal_code']
+        coords.at[idx, 'formaatted_address'] = location_info['frmatted_address']
+        successful += 1
+    else:
+        coords.at[idx, 'location_name'] = 'Unknown'
+        coords.at[idx, 'district'] = 'Unknown'
+        failed += 1
+
+     # Small delay to respect rate limits (not strictly necessary with API key)
+    time.sleep(0.1)
+        
+#Save results
+output_file = 'data/bronze/metadata/grid_coordinates_with_exact_locations.csv'
+coords.t_csv(output_file, ndex=False)
+
+print("\n" + "="*70)
+print("GEOCODING COMPLETE")
+print("="*70)
+print(f"✓ Successful: {successful}")
+print(f"✗ Failed: {failed}")
+print(f"✓ Saved to: {output_file}\n")
+
+# Show statistics
+print("Location Name Distribution:")
+print(coords['location_name'].value_counts().head(20))
+
+print("\n" + "="*70)
+print("SAMPLE RESULTS (First 30 Land/Coastal Cells)")
+print("="*70)
+sample = coords[coords['cell_type'].isin(['land', 'coastal'])].head(30)
+print(sample[['grid_id', 'location_name', 'locality', 'district', 'province']].to_string(index=False))
 
 
 
