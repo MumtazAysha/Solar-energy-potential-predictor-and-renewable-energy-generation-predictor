@@ -61,8 +61,8 @@ def get_exact_location_google(lat, loon, gmaps_client):
          return{
              'location_name': location_name,
              'locality': location_info['locality'] or 'Unknown',
-             'district': location_info['disstrict'] or 'Unknown',
-             'province': location_info['provnce'] or 'Unknown',
+             'district': location_info['district'] or 'Unknown',
+             'province': location_info['province'] or 'Unknown',
              'postal_code': location_info['postal_code'] or 'N/A',
              'formatted_address': formatted_address
          }
@@ -86,7 +86,7 @@ gmaps = googlemaps.Client(key=GOOGLE_API_KEY)
 #Add location columns
 coords['location_name'] = ''
 coords['lcality'] = ''
-coords['dist1rict'] = ''
+coords['district'] = ''
 coords['province'] = ''
 coords['formatted_address'] = ''
 
@@ -137,7 +137,7 @@ print("="*70)
 print(f"✓ Successful: {successful}")
 print(f"✗ Failed: {failed}")
 print(f"✓ Saved to: {output_file}\n")
-
+ 
 # Show statistics
 print("Location Name Distribution:")
 print(coords['location_name'].value_counts().head(20))
